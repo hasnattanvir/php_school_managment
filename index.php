@@ -1,4 +1,5 @@
 <?php 
+
 require('./database/database.php');
 $checkdb = new DB_Conn();
 $message = $checkdb->connectionMessage();
@@ -13,7 +14,9 @@ if (isset($_POST['logincheck'])) {
 
     $query = mysqli_query($intdatax->dbc, "SELECT * FROM users WHERE email = '$uemail' AND password = '$hashpass'");
     if (mysqli_num_rows($query) > 0) {
-        header('location:./admin/index.html');
+		session_start();
+		$test = $_SESSION["emailid"] = $uemail;
+        header('location:./admin/index.php');
     } else {
         echo "<script>alert('Invalid Login. Please try again.');</script>";
     }
@@ -21,8 +24,6 @@ if (isset($_POST['logincheck'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
-
 
 <head>
 	<meta charset="utf-8">
